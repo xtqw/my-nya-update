@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喵语助手 APK下载站</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+        body{background:#12141d;color:#e4e7ed;min-height:100vh;padding:40px 15px}
+        .container{max-width:600px;margin:0 auto}
+        h1{text-align:center;margin-bottom:32px;color:#64ffda;font-size:24px}
+        .card{background:#1e2230;border-radius:14px;padding:26px;border:1px solid #2c3142}
+        .info-row{margin:14px 0;font-size:16px;line-height:1.7}
+        .label{color:#949cb0;margin-right:6px;display:inline‑block;width:120px}
+        .content-text{color:#ffffff}
+        .download-btn{
+            display:block;text-align:center;background:#239677;color:#fff;
+            text-decoration:none;padding:14px;border-radius:10px;margin-top:30px;font-size:17px;font-weight:bold
+        }
+        .download-btn:active{background:#1c7d63}
+        .tip{margin-top:26px;font-size:13px;color:#83899b;text-align:center;line-height:1.6}
+        .loading{text-align:center;padding:40px 20px;color:#949cb0;font-size:16px}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📦 喵语助手 APK下载</h1>
+    <div class="card">
+        <div id="loading" class="loading">🔄 正在读取版本信息，请稍候…</div>
+        <div id="content" style="display:none">
+            <div class="info-row">
+                <span class="label">版本名称：</span><span class="content-text" id="verName"></span>
+            </div>
+            <div class="info-row">
+                <span class="label">VersionCode：</span><span class="content-text" id="verCode"></span>
+            </div>
+            <div class="info-row">
+                <span class="label">更新日志：</span>
+                <div class="content-text" id="updateLog" style="margin‑top:6px"></div>
+            </div>
+            <div class="info-row">
+                <span class="label">打包存放时间：</span><span class="content-text" id="buildTime"></span>
+            </div>
+            <a id="downloadLink" class="download-btn" href="app_new.apk">⬇️ 点击下载APK安装包</a>
+        </div>
+    </div>
+    <div class="tip">
+        说明：普通访客仅可以查看页面、下载安装包<br>
+        只有登录你的GitHub账号，才能够上传、修改、删除仓库内文件
+    </div>
+</div>
+
+<script>
+// 加时间戳绕过GitHub CDN缓存，每次读取最新version.json
+fetch("./version.json?t="+Date.now())
+.then(res=>{
+    if(!res.ok){
+        throw new Error("version.json读取失败，请检查仓库文件");
+    }
+    return res.json();
+})
+.then(json=>{
+    // 隐藏加载文字，显示内容卡片
+    document.getElementById("loading").style.display="none";
+    document.getElementById("content").style.display="block";
+
+    document.getElementById("verName").innerText = json.versionName;
+    document.getElementById("verCode").innerText = json.versionCode;
+    document.getElementById("updateLog").innerText = json.updateLog;
+
+    // 如果version.json写了buildTime就展示，没有就用网页加载时间
+    if(json.buildTime){
+        document.getElementById("buildTime").innerText = json.buildTime;
+    }else{
+        const now = new Date();
+        document.getElementById("buildTime").innerText = now.toLocaleString("zh‑CN");
+    }
+
+    // 下载链接优先读取json里面的downloadUrl
+    if(json.downloadUrl){
+        document.getElementById("downloadLink").href = json.downloadUrl;
+    }else{
+        document.getElementById("downloadLink").href = "./app_new.apk";
+    }
+})
+.catch(err=>{
+    document.getElementById("loading").innerText = "❌页面加载出错：" + err.message;
+})
+</script>
+</body>
+</html>
