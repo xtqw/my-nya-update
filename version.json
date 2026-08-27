@@ -1,6 +1,7 @@
 {
-  "versionCode": 21,
+  "versionCode": 22,
   "versionName": "抖音by：xtqw",
-  "apkUrl": "https://你的地址/app_new.apk",
-  "updateDesc": "修复了一些bug，优化了体验"
+  "downloadUrl": "https://xtqw.github.io/my-nya-update/app_new.apk",
+  "updateLog": "新增照片墙功能，音乐独立页面，优化电池损耗，修复已知bug",
+  "mustUpdate": false
 }
