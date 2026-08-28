@@ -1,8 +1,8 @@
 {
-  "versionCode": 25,
+  "versionCode": 26,
   "versionName": "抖音by：xtqw",
   "downloadUrl": "https://xtqw.github.io/my-nya-update/app_new.apk",
-  "updateLog": "修复音乐列表只显示1首bug；照片墙保留并清空照片；优化页面滑动",
+  "updateLog": "更新一堆没用的",
   "mustUpdate": false,
-  "buildTime": "2026‑08‑28 06:10"
+  "buildTime": "2026‑08‑28 12：00"
 }
